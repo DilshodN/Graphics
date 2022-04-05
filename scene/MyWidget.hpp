@@ -12,5 +12,7 @@ class MyWidget : public QWidget {
 Q_OBJECT
 
 public:
+    SquareWindow* m_window;
     MyWidget();
+    void createToolBar();
 };
