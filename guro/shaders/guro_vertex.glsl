@@ -19,6 +19,10 @@ varying highp vec3 frag_pos;
 varying highp vec3 v_viewPos;
 varying highp vec3 v_light_color;
 
+float f(float time){
+    return (sin(time)+1.0)/2.0;
+}
+
 void main() {
     vec3 test_norm_vec = normAttr;
     float x = posAttr.x;
@@ -37,19 +41,4 @@ void main() {
 
     norm_vec = normalize(norm_matrix * test_norm_vec);
     frag_pos = vec3(model * posAttr);
-    // ambient
-    vec3 lightColor = vec3(1.0f,1.0f,1.0f);
-    float ambientStrength = 0.2f;
-    vec3 ambient = ambientStrength * lightColor;
-    // diffuse
-    vec3 lightDir=normalize(lightPos-frag_pos);
-    float diffuse_impact = max(dot(norm_vec, lightDir), 0.0);
-    vec3 diffuse = diffuse_impact * lightColor;
-    // specular
-    float specularStrength = 0.5f;
-    vec3 viewDir = normalize(viewPos - frag_pos);
-    vec3 reflectDir = reflect(-lightDir, norm_vec);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 256);
-    vec3 specular = specularStrength * spec * lightColor;
-    v_light_color = specular + diffuse + ambient;
 }

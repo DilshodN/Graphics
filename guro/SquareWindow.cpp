@@ -10,12 +10,24 @@ SquareWindow::SquareWindow(QWidget *parent) : QOpenGLWidget(parent) {}
 void SquareWindow::initializeGL() {
     initializeOpenGLFunctions();
     program_ = std::make_unique<QOpenGLShaderProgram>(this);
-    program_->addShaderFromSourceFile(
-            QOpenGLShader::Vertex,
-            "../shaders/phong_vertex.glsl");
-    program_->addShaderFromSourceFile(
-            QOpenGLShader::Fragment,
-            "../shaders/phong_fragment.glsl");
+
+    if(shader_pick) {
+        program_->addShaderFromSourceFile(
+                QOpenGLShader::Vertex,
+                "../shaders/guro_vertex.glsl");
+        program_->addShaderFromSourceFile(
+                QOpenGLShader::Fragment,
+                "../shaders/guro_fragment.glsl");
+    }
+    else{
+        program_->addShaderFromSourceFile(
+                QOpenGLShader::Vertex,
+                "../shaders/phong_vertex.glsl");
+        program_->addShaderFromSourceFile(
+                QOpenGLShader::Fragment,
+                "../shaders/phong_fragment.glsl");
+    }
+
     program_->link();
 
     posAttr_ = program_->attributeLocation("posAttr");
@@ -37,6 +49,7 @@ void SquareWindow::paintGL() {
     auto start = std::chrono::system_clock::now();
 
     init_cube(1.5f, n);
+    initShaders();
 
     for (int i = 0; i < n_cubes_in_row; i++) {
         for (int j = 0; j < n_cubes_in_row; ++j) {
@@ -69,9 +82,11 @@ void SquareWindow::paintGL() {
 
     ++frame_;
     auto end = std::chrono::system_clock::now();
+    system("clear");
     auto time = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
     fps = (10e8 / time);
     std :: cout << "FPS: " << std::round(FPS()) << std::endl;
+
 }
 
 void SquareWindow::resizeGL(const int w, const int h) {
@@ -160,7 +175,7 @@ void SquareWindow::init_cube(const float width, const int N) {
             }
         }
     }
-    for (auto y = -width_div_2; y <= width_div_2; y += width) {
+    for (auto y = -width_div_2; y <= width_div_2 ; y += width) {
         for (auto i = 0; i < N; i++) {
             for (auto k = 0; k < N; k++) {
                 vertexes.emplace_back(
@@ -244,4 +259,36 @@ void SquareWindow::changexAx(float val) {
 float SquareWindow::FPS() {
     update();
     return fps;
+}
+
+void SquareWindow::change_shader() {
+    shader_pick = !shader_pick;
+    update();
+}
+
+void SquareWindow::initShaders() {
+
+    program_->removeAllShaders();
+
+    if(shader_pick) {
+        program_->addShaderFromSourceFile(
+                QOpenGLShader::Vertex,
+                "../shaders/guro_vertex.glsl");
+        program_->addShaderFromSourceFile(
+                QOpenGLShader::Fragment,
+                "../shaders/guro_fragment.glsl");
+    }
+    else{
+        program_->addShaderFromSourceFile(
+                QOpenGLShader::Vertex,
+                "../shaders/phong_vertex.glsl");
+        program_->addShaderFromSourceFile(
+                QOpenGLShader::Fragment,
+                "../shaders/phong_fragment.glsl");
+    }
+
+    if (!program_->link())
+        close();
+    if (!program_->bind())
+        close();
 }

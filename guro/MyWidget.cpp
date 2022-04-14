@@ -56,12 +56,16 @@ void MyWidget::createToolBar(){
     QPushButton *change_color_light_button = new QPushButton(tr("&LightColor"));
     change_color_light_button->setFocusPolicy(Qt::NoFocus);
 
+    QPushButton *shader_change = new QPushButton(tr("&Shader"));
+    shader_change->setFocusPolicy(Qt::NoFocus);
+
     container->addWidget(tSlider);
     container->addWidget(sun_Slider_x);
     container->addWidget(sun_Slider_y);
     container->addWidget(sun_Slider_z);
     container->addWidget(change_color_cube_button);
     container->addWidget(change_color_light_button);
+    container->addWidget(shader_change);
     container->addWidget(num_of_cube);
 
     w->setLayout(container);
@@ -74,6 +78,7 @@ void MyWidget::createToolBar(){
     connect(sun_Slider_z, &QSlider::valueChanged, m_window, &SquareWindow::change_light_z_param);
     connect(change_color_cube_button, &QPushButton::clicked, m_window, &SquareWindow::change_cube_color);
     connect(change_color_light_button, &QPushButton::clicked, m_window, &SquareWindow::change_light_color);
+    connect(shader_change, &QPushButton::clicked, m_window, &SquareWindow::change_shader);
     connect(num_of_cube, &QSlider::valueChanged, m_window, &SquareWindow::change_num_of_cubes);
 }
 

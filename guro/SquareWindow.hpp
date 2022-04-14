@@ -43,7 +43,11 @@ public:
     void change_cube_color();
     void change_light_color();
 
+    void change_shader();
+
     void changeN(int new_n);
+
+    void initShaders();
 
     float FPS();
 private:
@@ -77,6 +81,7 @@ private:
     float zAx = 8;
     float xAx = 2.5;
     float yAx = 2.5;
+    bool shader_pick = false;
 
     float fps = 0;
 
