@@ -7,13 +7,13 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
+add_definitions(-DGL_SILENCE_DEPRECATION)
+
 find_package(OpenGL REQUIRED)
 
 find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
 
-find_package(GLEW REQUIRED)
-include_directories(${GLEW_INCLUDE_DIRS})
-link_libraries(${GLEW_LIBRARIES})
+find_package(glm REQUIRED)
 
-add_executable(mesh main.cpp)
-target_link_libraries(mesh PRIVATE Qt5::Core Qt5::Widgets OpenGL::GL)
+add_executable(mesh main.cpp obj_loader.h obj_loader.cpp widget.cpp widget.h)
+target_link_libraries(mesh PRIVATE Qt5::Core Qt5::Widgets OpenGL::GL glm::glm)
