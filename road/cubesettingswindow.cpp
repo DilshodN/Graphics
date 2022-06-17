@@ -22,14 +22,6 @@ CubeSettingsWindow::~CubeSettingsWindow() {
 }
 
 
-void CubeSettingsWindow::on_spin_div_n_valueChanged(int arg1) {
-    //p.plane.set_latitude_bins(arg1);
-}
-
-void CubeSettingsWindow::on_spin_div_m_valueChanged(int arg1) {
-    //p.plane.set_longitude_bins(arg1);
-}
-
 void CubeSettingsWindow::on_camera_x_valueChanged(double arg1) {
     p.camera_pos.setX(arg1);
 }

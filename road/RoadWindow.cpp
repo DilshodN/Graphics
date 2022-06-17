@@ -14,7 +14,7 @@ void RoadWindow::initialize() {
     m_program->link();
 
 
-    glClearColor(1, 1, 1, 1);
+    glClearColor(0.52, 0.8, 0.92, 1);
 
     m_posAttr = m_program->attributeLocation("posAttr");
     Q_ASSERT(m_posAttr != -1);
@@ -123,7 +123,5 @@ void RoadWindow::keyPressEvent(QKeyEvent *event) {
         default:
             break;
     }
-
-
 }
 

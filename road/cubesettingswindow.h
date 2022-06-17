@@ -19,8 +19,6 @@ public:
     ~CubeSettingsWindow();
 
 private slots:
-    void on_spin_div_n_valueChanged(int arg1);
-    void on_spin_div_m_valueChanged(int arg1);
 
     void on_camera_x_valueChanged(double arg1);
     void on_camera_y_valueChanged(double arg1);

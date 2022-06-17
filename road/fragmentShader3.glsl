@@ -29,9 +29,10 @@ vec3 calcNormalFromNormalmap(vec3 localNormal, vec2 uv)
 void main() {
     vec3 n = vec3(0,1,0);
     vec3 col1 = texture2D( textureRoad1, uv ).rgb;
-    vec3 col2 = texture2D( textureRoad2, uv*2 ).rgb;
+    vec3 col2 = texture2D( textureRoad2, uv * 2 ).rgb;
     vec3 col3 = texture2D( textureRoad3, uv ).rgb;
     vec3 col = mix(col2, col1, 0.8) * col3;
+//    vec3 col = col2;
 
     vec3 dir_diffuse = vec3(0.0, 0.0, 0.0);
     if (length(directedDir) > 1e-5)
